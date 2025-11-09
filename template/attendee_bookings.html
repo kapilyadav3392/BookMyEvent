@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bookings - BookMyEvent</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 0; }
+        nav { background: #ffffff; padding: 12px 30px; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; }
+        nav a { margin-right: 18px; text-decoration: none; color: #333; font-weight: bold; }
+        nav .right a { color: white; background: #007bff; padding: 6px 12px; border-radius: 5px; }
+
+        .container { width: 850px; margin: 30px auto; }
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+        }
+        .cancel-btn {
+            background: red;
+            padding: 8px 14px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .cancel-btn:hover { background: darkred; }
+
+        footer { text-align: center; padding: 15px; background: #f0f0f0; margin-top: 40px; }
+    </style>
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR -->
+<nav>
+    <div>
+        <a href="{% url 'account:dashboard' %}">BookMyEvent</a>
+        <a href="{% url 'account:dashboard' %}">Home</a>
+        <a href="{% url 'attendee_bookings' %}">My Events</a>
+    </div>
+
+    <div class="right">
+        {% if user.is_authenticated %}
+            <a href="{% url 'account:dashboard' %}">Dashboard</a>
+        {% else %}
+            <a href="{% url 'account:login' %}">Login</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- ✅ CONTENT -->
+<div class="container">
+    <h2 style="text-align:center; margin-bottom: 25px;">My Booked Tickets</h2>
+
+    {% if bookings %}
+        {% for booking in bookings %}
+        <div class="card">
+            <h3>{{ booking.event.title }}</h3>
+            <p>
+                <strong>Date:</strong> {{ booking.event.date }}<br>
+                <strong>Location:</strong> {{ booking.event.location }}<br>
+                <strong>Booked At:</strong> {{ booking.booked_at }}
+            </p>
+
+            <h4>Tickets:</h4>
+            <ul>
+                {% for item in booking.items.all %}
+                <li>{{ item.ticket_type.name }} — {{ item.quantity }} × ₹{{ item.ticket_type.price }}</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{% url 'cancel_booking' booking.id %}">
+                <button class="cancel-btn">Cancel Booking</button>
+            </a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center; font-size:16px;">You haven't booked any tickets yet.</p>
+    {% endif %}
+</div>
+
+<!-- ✅ FOOTER -->
+<footer>
+    © 2025 BookMyEvent — All Rights Reserved
+</footer>
+
+</body>
+</html>

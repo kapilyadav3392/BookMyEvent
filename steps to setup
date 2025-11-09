@@ -1,0 +1,48 @@
+# BookMyEvent
+
+BookMyEvent is a Django-based event management application. Organizers can create and manage events, track ticket sales, and view attendees. Attendees can browse events, book tickets, and manage their bookings.
+
+---
+
+## Features
+
+**For Organizers**
+- Create, edit, and cancel events.
+- Define ticket types with price and quantity.
+- View attendees for each event.
+- Delete attendee bookings if needed.
+
+**For Attendees**
+- Browse upcoming events.
+- Book tickets for events with multiple ticket types.
+- Cancel bookings.
+- View booked tickets.
+
+---
+
+## Installation & Setup
+<!-- If use git -->
+### 1. Clone the repository
+```bash
+git clone <your-repo-url>
+
+**In CMD shell**
+
+cd BookMyEvent
+
+***install dependecies***
+
+pip install --upgrade pip
+pip install django
+
+***Apply database migrations***
+
+python manage.py makemigrations
+python manage.py migrate
+
+***Run the development server***
+
+python manage.py runserver
+
+Visit the app: http://127.0.0.1:8000/
+
